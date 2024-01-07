@@ -1,0 +1,19 @@
+version: '3.5'
+
+services:
+  db:
+    container_name: 'school_database'
+    image: postgres:14.5-alpine
+    shm_size: 2g
+    restart: always
+    environment:
+      POSTGRES_USER: school
+      POSTGRES_PASSWORD: 123qwe123
+      PGDATA: /var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: "pg_isready -q -U school"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
