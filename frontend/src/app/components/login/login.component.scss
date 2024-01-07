@@ -1,0 +1,7 @@
+.input {
+    @apply bg-black/10 border border-violet-500/50 hover:border-violet-500/90 outline-none text-white placeholder:text-white/60 sm:text-sm rounded-lg block w-full p-2.5;
+}
+
+.sign-in {
+    @apply w-full text-white bg-violet-500 hover:bg-violet-400 disabled:bg-violet-600 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center;
+}
