@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,21 +17,28 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+
 import { AdminComponent } from './components/admin/admin.component';
 import { MyCoursesComponent } from './components/my-courses/my-courses.component';
+import { LoggedGuard } from './guards/logged.guard';
+import { SuperUserGuard } from './guards/super-user.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     LoginComponent,
+    RegisterComponent,
     AdminComponent,
-    MyCoursesComponent
+    MyCoursesComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
@@ -46,6 +53,8 @@ import { MyCoursesComponent } from './components/my-courses/my-courses.component
       useClass: AuthInterceptor, 
       multi: true 
     },
+    LoggedGuard,
+    SuperUserGuard
   ],
   bootstrap: [AppComponent]
 })
