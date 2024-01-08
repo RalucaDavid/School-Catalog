@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 import { MyCoursesComponent } from './components/my-courses/my-courses.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { LoggedGuard } from './guards/logged.guard';
+import { SuperUserGuard } from './guards/super-user.guard';
 
 const routes: Routes = [
   {
@@ -10,12 +13,18 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
     path: 'my-courses',
-    component: MyCoursesComponent
+    component: MyCoursesComponent,
+    canActivate: [LoggedGuard]
   },
   {
     path: 'admin',
-    component: AdminComponent
+    component: AdminComponent,
+    canActivate: [SuperUserGuard]
   },
   {
     path: '**',
