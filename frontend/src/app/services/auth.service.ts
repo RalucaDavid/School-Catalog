@@ -49,6 +49,10 @@ export class AuthService {
     return this.user.asObservable();
   }
 
+  public get userValue() {
+    return this.user.getValue();
+  }
+
   public logout(): void {
     this.tokenService.next(null);
     this.router.navigate(['login']);
