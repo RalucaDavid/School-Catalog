@@ -2,14 +2,16 @@ package org.school.server.controllers;
 
 import io.dropwizard.auth.Auth;
 import org.school.PasswordHasher;
+import org.school.data.request.UserLoginData;
+import org.school.data.request.UserRegisterData;
 import org.school.database.dao.UserService;
 import org.school.database.models.UserEntity;
-import org.school.data.*;
 import org.school.server.jwt.JWTGenerator;
 import org.school.server.response.ErrorResponse;
 import org.school.server.response.Response;
 import org.school.server.response.SuccessResponse;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -56,4 +58,10 @@ public class UserController {
     public Response getUserData(@Auth UserEntity user) {
         return new SuccessResponse(user);
     }
+
+    @GET
+    @Path("/search/{keyword}")
+    @RolesAllowed(value="ADMIN")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response searchUser(@PathParam("keyword") String keyword) { return new SuccessResponse(userService.search(keyword)); }
 }
