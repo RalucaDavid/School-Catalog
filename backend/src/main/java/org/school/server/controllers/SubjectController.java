@@ -1,12 +1,14 @@
 package org.school.server.controllers;
 
 import org.school.database.dao.SubjectService;
-import org.school.data.SubjectCreationData;
+import org.school.data.request.SubjectCreationData;
+import org.school.server.response.ErrorResponse;
+import org.school.server.response.Response;
+import org.school.server.response.SuccessResponse;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 @Path("/subjects")
 @Produces(MediaType.APPLICATION_JSON)
@@ -18,12 +20,19 @@ public class SubjectController {
     @Path("/create")
     @RolesAllowed(value="ADMIN")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String createSubject(SubjectCreationData data) throws Exception {
+    public Response createSubject(SubjectCreationData data) {
         try {
-            subjectService.create(data);
+            return new SuccessResponse(subjectService.create(data));
         } catch (Exception e) {
-            throw new WebApplicationException(e.getMessage(), Response.Status.BAD_REQUEST);
+            return new ErrorResponse(e.getMessage());
         }
-        return "Subject " + data.name() + " created.";
+    }
+
+    @GET
+    @Path("/list")
+    @RolesAllowed(value="ADMIN")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response listSubjects() {
+        return new SuccessResponse(subjectService.getAll());
     }
 }

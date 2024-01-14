@@ -1,10 +1,13 @@
 package org.school.database.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Entity
@@ -26,6 +29,21 @@ public class SubjectEntity {
     @Setter
     private String description;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_teaching_subject",
+            joinColumns = @JoinColumn(name = "subject_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<UserEntity> teachers = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_learning_subject",
+            joinColumns = @JoinColumn(name = "subject_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<UserEntity> students = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

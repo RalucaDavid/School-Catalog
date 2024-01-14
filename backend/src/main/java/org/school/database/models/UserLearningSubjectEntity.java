@@ -1,11 +1,13 @@
 package org.school.database.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 
 import java.util.Objects;
 
-@Getter
+@Data
 @Entity
 @Table(name = "user_learning_subject", schema = "public", catalog = "school")
 public class UserLearningSubjectEntity {
@@ -16,12 +18,22 @@ public class UserLearningSubjectEntity {
     private long id;
 
     @Basic
-    @Column(name = "userId", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private long userId;
 
     @Basic
-    @Column(name = "subjectId", nullable = false)
+    @Column(name = "subject_id", nullable = false)
     private long subjectId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JsonBackReference
+    private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "subject_id", insertable = false, updatable = false)
+    @JsonBackReference
+    private SubjectEntity subject;
 
     @Override
     public boolean equals(Object o) {

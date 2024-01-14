@@ -1,11 +1,14 @@
 package org.school.database.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @Entity
@@ -37,6 +40,14 @@ public class UserEntity implements Principal {
     @Basic
     @Column(name = "is_super_user", nullable = false)
     private boolean isSuperUser;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Set<UserLearningSubjectEntity> learningSubjects = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Set<UserTeachingSubjectEntity> teachingSubjects = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
