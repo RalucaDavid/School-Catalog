@@ -18,7 +18,7 @@ public class SubjectController {
 
     @POST
     @Path("/create")
-    @RolesAllowed(value="ADMIN")
+    @RolesAllowed({"ADMIN"})
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSubject(SubjectCreationData data) {
         try {
@@ -30,7 +30,7 @@ public class SubjectController {
 
     @GET
     @Path("/list")
-    @RolesAllowed(value="ADMIN")
+    @RolesAllowed({"ADMIN"})
     @Consumes(MediaType.APPLICATION_JSON)
     public Response listSubjects() {
         return new SuccessResponse(subjectService.getAll());

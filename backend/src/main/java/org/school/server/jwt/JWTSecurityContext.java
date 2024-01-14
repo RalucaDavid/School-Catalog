@@ -9,9 +9,7 @@ public class JWTSecurityContext implements SecurityContext {
 
     private final UserEntity user;
 
-    public JWTSecurityContext(UserEntity user) {
-        this.user = user;
-    }
+    public JWTSecurityContext(UserEntity user) { this.user = user; }
 
     @Override
     public Principal getUserPrincipal() {
@@ -24,6 +22,9 @@ public class JWTSecurityContext implements SecurityContext {
         if (role.equals("ADMIN"))
             return user.isSuperUser();
 
+        if (role.equals("TEACHER"))
+            return user.isSuperUser() || !user.getTeachingSubjects().isEmpty();
+
         return false;
     }
 
@@ -34,6 +35,6 @@ public class JWTSecurityContext implements SecurityContext {
 
     @Override
     public String getAuthenticationScheme() {
-        return "JWT";
+        return "Bearer";
     }
 }

@@ -61,7 +61,7 @@ public class UserController {
 
     @GET
     @Path("/search/{keyword}")
-    @RolesAllowed(value="ADMIN")
+    @RolesAllowed({"TEACHER"})
     @Consumes(MediaType.APPLICATION_JSON)
     public Response searchUser(@PathParam("keyword") String keyword) { return new SuccessResponse(userService.search(keyword)); }
 }
