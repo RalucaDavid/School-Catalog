@@ -1,5 +1,6 @@
 package org.school.database.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class UserSubjectGradesEntity {
     private long id;
 
     @Basic
-    @Column(name = "userSubjectId", nullable = false)
+    @Column(name = "user_subject_id", nullable = false)
     private long userSubjectId;
 
     @Basic
@@ -28,6 +29,11 @@ public class UserSubjectGradesEntity {
     @Column(name = "is_final", nullable = false)
     @Setter
     private boolean isFinal;
+
+    @ManyToOne
+    @JoinColumn(name = "user_subject_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JsonBackReference
+    private UserLearningSubjectEntity userSubject;
 
     @Override
     public boolean equals(Object o) {
