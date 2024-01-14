@@ -25,6 +25,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { MyCoursesComponent } from './components/my-courses/my-courses.component';
 import { LoggedGuard } from './guards/logged.guard';
 import { SuperUserGuard } from './guards/super-user.guard';
+import { SubjectComponent } from './components/admin/subject/subject.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { SuperUserGuard } from './guards/super-user.guard';
     RegisterComponent,
     AdminComponent,
     MyCoursesComponent,
+    SubjectComponent,
   ],
   imports: [
     BrowserModule,
