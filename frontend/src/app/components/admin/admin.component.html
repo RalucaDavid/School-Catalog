@@ -1,1 +1,30 @@
-<p>admin works!</p>
+<div class = "w-full flex justify-center space-x-3 px-2">
+  
+  <div class="w-1/3 block px-4 py-1 bg-[#2C2E3B] border-white/5 rounded-lg shadow">
+    <div class="my-2 text-xl font-bold tracking-tight text-gray-100 flex justify-between items-center">
+      Subjects 
+    </div>
+    <div class = "text-gray-400 text-sm" *ngIf="subjects && !subjects.length">No subjects created yet.</div>
+    <ng-container *ngFor="let subject of subjects">
+     <subject [subject]="subject"></subject>
+    </ng-container>
+  </div>  
+  <div class="w-1/3 block px-4 py-1 bg-[#2C2E3B] border-white/5 rounded-lg shadow">
+    <div class="mt-2 text-xl font-bold tracking-tight text-gray-100 flex justify-between items-center">
+      Create a new subject 
+    </div>
+    <div class = "text-gray-400 text-sm mt-1">Create a new subject by filling out the form below.</div>
+
+    <form class="space-y-4 md:space-y-6 py-2" [formGroup]="formGroup">
+      <div>
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject name</label>
+        <input type="text" class="input" placeholder="MIP" formControlName="name" [ngClass]="{ 'is-invalid': formGroup.touched && formGroup.controls['name'].errors }">
+      </div>
+      <div>
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject description</label>
+        <input type="text" class="input" placeholder="Medii si instrumente de programare" formControlName="description" [ngClass]="{ 'is-invalid': formGroup.touched && formGroup.controls['description'].errors }">
+      </div>
+      <button class="button" [disabled]="!formGroup.valid" (click)="createSubject()">Add new subject</button>
+    </form>
+  </div>
+</div>

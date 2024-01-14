@@ -1,0 +1,20 @@
+<div class = "flex justify-between items-center w-full bg-black/10 rounded-md my-1 p-2 text-gray-400" *ngIf="subject">
+  <div class = "flex flex-wrap">
+    <div class = "w-full">{{ subject.name }}</div>
+    <div class = "w-full text-xs text-gray-500"> {{ subject.description }}</div>
+  </div>
+
+  <div class = "bg-red-600 teacher" *ngIf="!subject.teachers || !subject.teachers.length">
+    No teacher <fa-icon [icon]="['fas', 'pencil']" class = "mr-1 hover:text-white"></fa-icon>
+  </div>
+
+  <ng-container *ngIf="subject.teachers && subject.teachers.length">
+    <div class = "flex flex-wrap space-x-1">
+      <div class = "bg-green-600 teacher" *ngFor="let teacher of subject.teachers">
+        {{ teacher.fullName }}  <fa-icon [icon]="['fas', 'xmark']" class = "mr-1 hover:text-white"></fa-icon>
+      </div>
+    </div>
+  </ng-container>
+
+
+</div>

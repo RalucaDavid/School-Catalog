@@ -9,10 +9,10 @@
       <div class="ml-10 block w-auto" *ngIf="user">
         <ul class="flex font-medium p-0 border-gray-100 rounded-lg bg-transparent space-x-8 flex-row mt-0 border-0">
           <li>
-            <a class="link">My courses</a>
+            <a routerLink="/my-courses" class="link">My courses</a>
           </li>
           <li *ngIf="user.superUser">
-            <a class="link">Admin</a>
+            <a routerLink="/admin" class="link">Admin</a>
           </li>
         </ul>
       </div>
