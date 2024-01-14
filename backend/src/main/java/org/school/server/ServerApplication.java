@@ -6,10 +6,10 @@ import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.school.database.models.UserEntity;
 import org.school.server.controllers.SubjectController;
 import org.school.server.jwt.JWTAuthFilter;
-import org.school.server.jwt.JWTAuthenticator;
 import org.school.server.jwt.JWTGenerator;
 import org.school.server.controllers.UserController;
 
@@ -40,7 +40,8 @@ public class ServerApplication extends Application<ServerConfiguration> {
             throw new RuntimeException("JWT secret key is missing from the configuration");
 
         JWTGenerator.setSecret(secretKey);
-        environment.jersey().register(new AuthDynamicFeature(new JWTAuthFilter(new JWTAuthenticator())));
+        environment.jersey().register(new AuthDynamicFeature(new JWTAuthFilter()));
+        environment.jersey().register(RolesAllowedDynamicFeature.class);
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(UserEntity.class));
 
         // User Controller (Handles auth & /me endpoint)
