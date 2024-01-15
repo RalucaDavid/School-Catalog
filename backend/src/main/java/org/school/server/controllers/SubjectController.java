@@ -1,5 +1,6 @@
 package org.school.server.controllers;
 
+import org.school.data.request.TeacherAddRemoveData;
 import org.school.database.dao.SubjectService;
 import org.school.data.request.SubjectCreationData;
 import org.school.server.response.ErrorResponse;
@@ -20,10 +21,14 @@ public class SubjectController {
     @Path("/create")
     @RolesAllowed({"ADMIN"})
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createSubject(SubjectCreationData data) {
-        try {
+    public Response createSubject(SubjectCreationData data)
+    {
+        try
+        {
             return new SuccessResponse(subjectService.create(data));
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return new ErrorResponse(e.getMessage());
         }
     }
@@ -34,5 +39,38 @@ public class SubjectController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response listSubjects() {
         return new SuccessResponse(subjectService.getAll());
+    }
+
+    @PUT
+    @Path("/teacher")
+    @RolesAllowed({"ADMIN"})
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addTeacher(TeacherAddRemoveData data)
+    {
+        try
+        {
+            return new SuccessResponse(subjectService.addTeacher(data));
+        }
+        catch (Exception e)
+        {
+            return new ErrorResponse(e.getMessage());
+        }
+    }
+
+    @DELETE
+    @Path("/teacher")
+    @RolesAllowed({"ADMIN"})
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response removeTeacher(TeacherAddRemoveData data)
+    {
+        try
+        {
+            subjectService.removeTeacher(data);
+            return new SuccessResponse(true);
+        }
+        catch (Exception e)
+        {
+            return new ErrorResponse(e.getMessage());
+        }
     }
 }

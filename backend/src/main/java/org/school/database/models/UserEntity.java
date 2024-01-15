@@ -13,6 +13,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "users", schema = "public", catalog = "school")
+@Cacheable(false)
 public class UserEntity implements Principal {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

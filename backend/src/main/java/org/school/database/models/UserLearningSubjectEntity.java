@@ -10,6 +10,7 @@ import java.util.Objects;
 @Data
 @Entity
 @Table(name = "user_learning_subject", schema = "public", catalog = "school")
+@Cacheable(false)
 public class UserLearningSubjectEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

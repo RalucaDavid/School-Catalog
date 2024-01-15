@@ -12,6 +12,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "subjects", schema = "public", catalog = "school")
+@Cacheable(false)
 public class SubjectEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

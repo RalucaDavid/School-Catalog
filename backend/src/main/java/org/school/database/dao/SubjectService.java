@@ -1,6 +1,8 @@
 package org.school.database.dao;
 
+import org.school.data.request.TeacherAddRemoveData;
 import org.school.data.response.SubjectListResult;
+import org.school.data.response.UserSearchResult;
 import org.school.database.Database;
 import org.school.database.models.SubjectEntity;
 import org.school.data.request.SubjectCreationData;
@@ -8,6 +10,7 @@ import org.school.database.models.UserEntity;
 import org.school.database.models.UserTeachingSubjectEntity;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SubjectService {
@@ -34,7 +37,7 @@ public class SubjectService {
                         entityManager.createQuery("SELECT s FROM SubjectEntity s LEFT JOIN s.teachers t", SubjectEntity.class)
                                 .getResultList(), List.class);
 
-         return subjects.parallelStream().map(SubjectListResult::new).collect(Collectors.toList());
+         return subjects.stream().map(SubjectListResult::new).collect(Collectors.toList());
     }
 
     public SubjectEntity create(SubjectCreationData data) throws Exception {
@@ -56,30 +59,56 @@ public class SubjectService {
         return subject;
     }
 
-    public void addTeacher(long subjectId, long userId) throws Exception
+    public UserSearchResult addTeacher(TeacherAddRemoveData data) throws Exception
     {
-        SubjectEntity subject = this.getById(subjectId);
+        SubjectEntity subject = this.getById(data.subjectId());
 
         if (subject == null)
             throw new Exception("Invalid subject.");
 
-        UserEntity user = this.userService.getById(userId);
+        UserEntity user = this.userService.getById(data.userId());
 
         if (user == null)
             throw new Exception("Invalid user.");
 
-        if (user.getTeachingSubjects().stream().anyMatch(l -> l.getSubjectId() == subjectId))
+        if (user.getTeachingSubjects().stream().anyMatch(l -> l.getSubjectId() == data.subjectId()))
             throw new Exception(user.getName() + " is already teaching " + subject.getName());
 
-        if (user.getLearningSubjects().stream().anyMatch(l -> l.getSubjectId() == subjectId))
+        if (user.getLearningSubjects().stream().anyMatch(l -> l.getSubjectId() == data.subjectId()))
             throw new Exception(user.getName() + " is a student of " + subject.getName());
 
         UserTeachingSubjectEntity teachingEntity = new UserTeachingSubjectEntity();
-        teachingEntity.setSubjectId(subjectId);
-        teachingEntity.setUserId(userId);
+        teachingEntity.setSubjectId(data.subjectId());
+        teachingEntity.setUserId(data.userId());
 
         database.executeQueryTransaction(em -> {
             em.persist(teachingEntity);
+        });
+
+        return new UserSearchResult(user);
+    }
+
+    public void removeTeacher(TeacherAddRemoveData data) throws Exception
+    {
+        SubjectEntity subject = this.getById(data.subjectId());
+
+        if (subject == null)
+            throw new Exception("Invalid subject.");
+
+        UserEntity user = this.userService.getById(data.userId());
+
+        if (user == null)
+            throw new Exception("Invalid user.");
+
+        Optional<UserTeachingSubjectEntity> teaching = user.getTeachingSubjects().stream().filter(t -> t.getSubjectId() == data.subjectId()).findFirst();
+
+        if (teaching.isEmpty())
+            throw new Exception(user.getName() + " is not teaching " + subject.getName());
+
+        database.executeQueryTransaction(em -> {
+            em.createQuery("delete from UserTeachingSubjectEntity where id = :id")
+                    .setParameter("id", teaching.get().getId())
+                    .executeUpdate();
         });
     }
 }
