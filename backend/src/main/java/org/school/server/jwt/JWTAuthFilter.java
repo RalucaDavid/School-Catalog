@@ -12,7 +12,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.MultivaluedMap;
 import java.util.Optional;
 
-@Priority(Priorities.AUTHORIZATION)
+@Priority(0)
 public class JWTAuthFilter extends AuthFilter<String, UserEntity> {
 
     private final UserService userService = new UserService();
