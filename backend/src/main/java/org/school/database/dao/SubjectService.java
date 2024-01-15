@@ -105,6 +105,8 @@ public class SubjectService {
         if (teaching.isEmpty())
             throw new Exception(user.getName() + " is not teaching " + subject.getName());
 
+        // em.remove will give us an error because UserTeachingSubjectEntity is not persisted (i think).
+        // deleting using a query works
         database.executeQueryTransaction(em -> {
             em.createQuery("delete from UserTeachingSubjectEntity where id = :id")
                     .setParameter("id", teaching.get().getId())
