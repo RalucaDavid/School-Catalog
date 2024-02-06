@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -35,6 +36,9 @@ public class UserLearningSubjectEntity {
     @JoinColumn(name = "subject_id", insertable = false, updatable = false)
     @JsonBackReference
     private SubjectEntity subject;
+
+    @OneToMany(mappedBy = "userSubject", fetch = FetchType.LAZY)
+    private List<UserSubjectGradesEntity> userSubjectGrades;
 
     @Override
     public boolean equals(Object o) {

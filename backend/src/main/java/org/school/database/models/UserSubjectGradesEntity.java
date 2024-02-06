@@ -1,10 +1,12 @@
 package org.school.database.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -18,18 +20,26 @@ public class UserSubjectGradesEntity {
     @Column(name = "id", nullable = false)
     private long id;
 
+    @JsonIgnore
     @Basic
     @Column(name = "user_subject_id", nullable = false)
+    @Setter
     private long userSubjectId;
 
     @Basic
     @Column(name = "grade", nullable = false, precision = 0)
+    @Setter
     private double grade;
 
     @Basic
     @Column(name = "is_final", nullable = false)
     @Setter
     private boolean isFinal;
+
+    @Basic
+    @Column(name = "date", nullable = false)
+    @Setter
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "user_subject_id", referencedColumnName = "id", insertable = false, updatable = false)

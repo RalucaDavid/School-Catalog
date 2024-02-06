@@ -29,10 +29,10 @@ public class UserService {
 
     public List<UserSearchResult> search(String keyword) {
         List<UserEntity> users = database.executeQueryTransaction(entityManager ->
-                        entityManager.createQuery("select user from UserEntity user where CONCAT(user.firstName, ' ', user.lastName) LIKE :keyword", UserEntity.class)
-                                .setParameter("keyword", '%' + keyword + '%').getResultList()
+                        entityManager.createQuery("select user from UserEntity user where LOWER(CONCAT(user.firstName, ' ', user.lastName)) LIKE :keyword", UserEntity.class)
+                                .setParameter("keyword", '%' + keyword.toLowerCase() + '%').getResultList()
                 , List.class);
-        return users.stream().map(u -> new UserSearchResult(u)).collect(Collectors.toList());
+        return users.stream().map(UserSearchResult::new).collect(Collectors.toList());
     }
 
     public void create(UserRegisterData data) throws Exception {
