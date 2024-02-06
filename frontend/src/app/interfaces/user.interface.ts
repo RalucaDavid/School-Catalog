@@ -4,4 +4,7 @@ export interface User {
     firstName: string;
     lastName: string;
     superUser?: boolean;
+
+    learningSubjects: Array<any>;
+    teachingSubjects: Array<any>;
 };

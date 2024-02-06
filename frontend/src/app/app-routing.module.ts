@@ -6,6 +6,7 @@ import { MyCoursesComponent } from './components/my-courses/my-courses.component
 import { AdminComponent } from './components/admin/admin.component';
 import { LoggedGuard } from './guards/logged.guard';
 import { SuperUserGuard } from './guards/super-user.guard';
+import { SubjectStudentsComponent } from './components/subject-students/subject-students.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [SuperUserGuard]
+  },
+  {
+    path: 'subject/:id',
+    component: SubjectStudentsComponent,
+    canActivate: [LoggedGuard],
   },
   {
     path: '**',
