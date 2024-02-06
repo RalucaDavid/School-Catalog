@@ -1,0 +1,39 @@
+<div class = "w-full flex justify-center space-x-3 px-2">
+
+  <div class="w-1/3 block px-4 py-1 bg-[#2C2E3B] border-white/5 rounded-lg shadow h-max">
+    <div class="my-2 text-xl font-bold tracking-tight text-gray-100 flex justify-between items-center">
+      My Courses 
+    </div>
+    <div class = "text-gray-400 text-sm" *ngIf="!learningCourses">You are not enrolled on any course.</div>
+    <div class = "text-gray-400 text-sm" *ngIf="learningCourses">Here's a list of the subjects you're currently learning and your grades.</div>
+
+    <div class = "flex justify-between items-center w-full bg-black/10 rounded-md my-1 p-2 text-gray-400" *ngFor="let course of learningCourses | keyvalue">
+      <div class = "flex flex-wrap">
+        <div class = "w-full">{{ course.key }}</div>
+      </div>
+      <div class = "flex justify-end items-center space-x-1 cursor-pointer">
+        <ng-container *ngFor="let grade of course.value">
+          <div class = "text-white px-2 py-1 rounded-md text-sm" [ngClass]="{'bg-blue-400': !grade.final, 'bg-red-500': grade.final}" [matTooltip]="(grade.timestamp | date) ?? ''">
+            {{ grade.grade | number:'1.0-2' }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-1/3 block px-4 py-1 bg-[#2C2E3B] border-white/5 rounded-lg shadow h-max">
+    <div class="my-2 text-xl font-bold tracking-tight text-gray-100 flex justify-between items-center">
+      Teaching Courses 
+    </div>
+    <div class = "text-gray-400 text-sm">Here's a list of the subjects you're currently teaching.</div>
+    <div class = "flex justify-between items-center w-full bg-black/10 rounded-md my-1 p-2 text-gray-400" *ngFor="let course of teachingCourses">
+      <div class = "flex flex-wrap">
+        <div class = "w-full">{{ course.name }}</div>
+      </div>
+      <a [routerLink]="['/subject', course.id]">
+        <fa-icon [icon]="['fas', 'angle-right']" class = "text-gray-200 hover:text-white mr-2 cursor-pointer"></fa-icon>
+      </a>
+    </div>
+  </div>  
+
+</div>

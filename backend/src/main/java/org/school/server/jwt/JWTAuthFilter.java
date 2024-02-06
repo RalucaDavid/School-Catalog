@@ -7,7 +7,6 @@ import org.school.database.dao.UserService;
 import org.school.database.models.UserEntity;
 
 import javax.annotation.Priority;
-import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.MultivaluedMap;
 import java.util.Optional;
@@ -45,9 +44,12 @@ public class JWTAuthFilter extends AuthFilter<String, UserEntity> {
     }
 
     private Optional<UserEntity> authenticate(String token) throws AuthenticationException {
-        try {
+        try
+        {
             return Optional.of(userService.getByEmail(JWTGenerator.parse(token)));
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return Optional.empty(); // Authentication failed
         }
     }

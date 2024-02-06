@@ -1,0 +1,14 @@
+<div class = "bg-[#2C2E3B] border-white/10 p-2">  
+  <div class="p-2 text-gray-300">
+    <label class="block mb-2 text-base font-medium text-white">Insert part of user name</label>
+    <input type="text" class="bg-black/10 border border-violet-500/50 hover:border-violet-500/90 outline-none text-white placeholder:text-white/60 text-sm rounded-lg block w-full p-2.5" placeholder="Search user" #input (keydown)="inputDataChange(input.value)">
+  </div>
+  <div class = "mt-2 px-2">
+    <div class = "flex justify-start items-center w-full bg-black/10 rounded-md my-1 p-2 text-gray-400" *ngFor="let user of users">
+      {{ user.fullName }}
+      <div class = "ml-auto">
+        <fa-icon [icon]="['fas', 'check']" class = "mr-1 hover:text-green-400 text-green-500" (click)="selectUser(user)"></fa-icon>
+      </div>
+    </div>
+  </div>
+</div>

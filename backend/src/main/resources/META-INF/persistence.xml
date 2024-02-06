@@ -12,6 +12,7 @@
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="jakarta.persistence.jdbc.user" value="school"/>
             <property name="jakarta.persistence.jdbc.password" value="123qwe123"/>
+            <property name="jakarta.persistence.query-results-cache" value="false"/>
         </properties>
     </persistence-unit>
 </persistence>

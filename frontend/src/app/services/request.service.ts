@@ -54,4 +54,49 @@ export class RequestService {
         });
       });
     }
+
+    public put<K>(path: string, data?: Object) {
+      return new Promise<K>((resolve, reject) => {
+        firstValueFrom(this.httpClient.put<Response<K>>(`${environment.apiUrl}${path}`, data)).then((response) => {
+
+          const { status, data } = response;
+
+          switch (status) {
+            case 'ERROR':
+              reject(data);
+              break;
+            case 'SUCCESS':
+              resolve(data);
+              break;
+          }
+        }).catch(() => {
+          reject(
+            'Failed to send request.'
+          );
+        });
+      });
+    }
+
+    public delete<K>(path: string, data?: Object) {
+      return new Promise<K>((resolve, reject) => {
+        firstValueFrom(this.httpClient.delete<Response<K>>(`${environment.apiUrl}${path}`, { body: data })).then((response) => {
+
+          const { status, data } = response;
+
+          switch (status) {
+            case 'ERROR':
+              reject(data);
+              break;
+            case 'SUCCESS':
+              resolve(data);
+              break;
+          }
+        }).catch(() => {
+          reject(
+            'Failed to send request.'
+          );
+        });
+      });
+    }
+
 }
