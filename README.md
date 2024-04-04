@@ -9,7 +9,10 @@ It was created using the Java programming language and the following advanced co
     <strong>Networking</strong> - the communication between client and server ( Made with the Dropwizard framework )
   </li>
   <li>
-    <strong>Database</strong> - the data that the server will use will be handled by a database ( Made with JPA )
+    <strong>Database</strong> - the data that the server will use will be handled by a database ( Made with JPA and PostgreSQL )
+  </li>
+  <li>
+    <strong>Security</strong> - the authentication is secure so that only users can have access to the functionalities of the catalog ( Made with JWT )
   </li>
 </ul>
 
